@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API3.Data;
 using API3.Models;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace API3
 {
@@ -25,7 +28,32 @@ namespace API3
         {
             var aPI3Context = _context.ApiFilm.Include(a => a.User);
             return View(await aPI3Context.ToListAsync());
+
         }
+
+        public async Task<IActionResult> BtnSearch_Click(string button, string searchBalk)
+        {
+            string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s==joker";
+            using (WebClient wc = new WebClient())
+            {
+                var json = wc.DownloadString(url);
+                string jsonString = JsonSerializer.Serialize(url);
+                
+            }
+                if (button == "searchBtn")
+                {
+
+                    TempData["buttonoval"] = JsonSerializer.Serialize(url);
+                }
+                else
+                {
+                    TempData["buttonoval"] = "fuck off";
+                }
+            
+            return RedirectToAction("Index");
+
+        }
+
 
         // GET: ApiFilms/Details/5
         public async Task<IActionResult> Details(int? id)

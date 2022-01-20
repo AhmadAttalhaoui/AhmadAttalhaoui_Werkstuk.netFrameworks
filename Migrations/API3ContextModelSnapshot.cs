@@ -87,6 +87,68 @@ namespace API3.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("API3.Models.ApiFilm", b =>
+                {
+                    b.Property<int>("ApiFilmId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApiFilmId"), 1L, 1);
+
+                    b.Property<string>("FilmimdbID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("imdbID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ApiFilmId");
+
+                    b.HasIndex("FilmimdbID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ApiFilm");
+                });
+
+            modelBuilder.Entity("API3.Models.Film", b =>
+                {
+                    b.Property<string>("imdbID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Plot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Poster")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Runtime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("imdbID");
+
+                    b.ToTable("Film");
+                });
+
             modelBuilder.Entity("API3.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -246,6 +308,25 @@ namespace API3.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("API3.Models.ApiFilm", b =>
+                {
+                    b.HasOne("API3.Models.Film", "Film")
+                        .WithMany()
+                        .HasForeignKey("FilmimdbID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API3.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Film");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -15,4 +15,13 @@ html {
 
 body {
   margin-bottom: 60px;
+ 
+}
+
+.apart{
+    display: flex;
+    width: 20%;
+}
+div{
+    display:block;
 }

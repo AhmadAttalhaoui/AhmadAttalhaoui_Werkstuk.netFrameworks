@@ -5,7 +5,15 @@
 }
 
 <h1>Index</h1>
-
+<section class="apart">
+<form>
+<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="balk" value="searchBalk">
+</form>
+<form>
+<button asp-action="BtnSearch_Click"  name="button" class="btn btn-outline-success" value="searchBtn" type="submit" >Search</button>
+@TempData["buttonoval"]
+</form>
+</section>
 <p>
     <a asp-action="Create">Create New</a>
 </p>

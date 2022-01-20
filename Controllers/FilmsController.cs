@@ -33,6 +33,8 @@ namespace API3
         [HttpGet("{id}")]
         public async Task<ActionResult<Film>> GetFilm(string id)
         {
+
+
             var film = await _context.Film.FindAsync(id);
 
             if (film == null)
