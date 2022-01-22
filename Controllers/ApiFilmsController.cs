@@ -31,25 +31,29 @@ namespace API3
 
         }
 
-        public async Task<IActionResult> BtnSearch_Click(string button, string searchBalk)
+        public async Task<IActionResult> BtnSearch_Click(string button, string Search)
         {
-            string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s==joker";
+            string url = "https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s==joker";
             using (WebClient wc = new WebClient())
             {
                 var json = wc.DownloadString(url);
                 string jsonString = JsonSerializer.Serialize(url);
-                
-            }
-                if (button == "searchBtn")
-                {
 
-                    TempData["buttonoval"] = JsonSerializer.Serialize(url);
-                }
-                else
-                {
-                    TempData["buttonoval"] = "fuck off";
-                }
-            
+
+            }
+
+            if (button == "titleBtn")
+            {
+                Console.WriteLine("JsonSerializer.Serialize(url)");
+
+                TempData["buttonoval"] = JsonSerializer.Serialize(url);
+            }
+            else
+            {
+                Console.WriteLine("JsonSerializer.Serialize(urt)");
+                TempData["buttonoval"] = "fuck off";
+            }
+
             return RedirectToAction("Index");
 
         }
