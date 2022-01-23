@@ -1,19 +1,15 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API3.Data;
 using API3.Models;
+using RestSharp;
+using System.Net;
+using Nancy.Json;
 
 namespace API3
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class FilmsController : ControllerBase
+    public class FilmsController : Controller
     {
         private readonly API3Context _context;
 
@@ -22,99 +18,158 @@ namespace API3
             _context = context;
         }
 
-        // GET: api/Films
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> GetFilm()
+        // GET: Films
+        public async Task<IActionResult> Index()
         {
-            return await _context.Film.ToListAsync();
+            return View(await _context.Film.ToListAsync());
         }
 
-        // GET: api/Films/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Film>> GetFilm(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> check(string button, string Search, string div, string movie)
         {
 
+          /*  var Film = new RestClient($"https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" );*/
+            /*RestRequest request = new RestRequest(Method.Get);
+            IRestResponse response = await client.ExecuteAsync(request);*/
 
-            var film = await _context.Film.FindAsync(id);
+            //TODO: transform the response here to suit your needs
 
+            string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movie;
+            using (WebClient wc = new WebClient())
+            {
+                var json = wc.DownloadString(url);
+                JavaScriptSerializer oJS = new JavaScriptSerializer();
+                Root obj = oJS.Deserialize<Root>(json);
+
+                if (obj.Response == "True")
+                {
+                    TempData["buttonoval"] = obj.Search;
+                    
+                }
+
+                return RedirectToAction("Index");
+            }
+        }
+
+        // GET: Films/Details/5
+        public async Task<IActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var film = await _context.Film
+                .FirstOrDefaultAsync(m => m.imdbID == id);
             if (film == null)
             {
                 return NotFound();
             }
 
-            return film;
+            return View(film);
         }
 
-        // PUT: api/Films/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFilm(string id, Film film)
+        // GET: Films/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Films/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search film)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(film);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(film);
+        }
+
+        // GET: Films/Edit/5
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var film = await _context.Film.FindAsync(id);
+            if (film == null)
+            {
+                return NotFound();
+            }
+            return View(film);
+        }
+
+        // POST: Films/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search film)
         {
             if (id != film.imdbID)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(film).State = EntityState.Modified;
-
-            try
+            if (ModelState.IsValid)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FilmExists(id))
+                try
                 {
-                    return NotFound();
+                    _context.Update(film);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!FilmExists(film.imdbID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction(nameof(Index));
             }
-
-            return NoContent();
+            return View(film);
         }
 
-        // POST: api/Films
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Film>> PostFilm(Film film)
+        // GET: Films/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
-            _context.Film.Add(film);
-            try
+            if (id == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (FilmExists(film.imdbID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return CreatedAtAction("GetFilm", new { id = film.imdbID }, film);
-        }
-
-        // DELETE: api/Films/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFilm(string id)
-        {
-            var film = await _context.Film.FindAsync(id);
+            var film = await _context.Film
+                .FirstOrDefaultAsync(m => m.imdbID == id);
             if (film == null)
             {
                 return NotFound();
             }
 
+            return View(film);
+        }
+
+        // POST: Films/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var film = await _context.Film.FindAsync(id);
             _context.Film.Remove(film);
             await _context.SaveChangesAsync();
-
-            return NoContent();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool FilmExists(string id)

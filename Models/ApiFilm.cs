@@ -9,7 +9,7 @@ namespace API3.Models
         public string imdbID { get; set; }
         [Required]
         [Display(Name = "Film")]
-        public Film Film { get; set; }
+        public Search Film { get; set; }
 
         public int UserId { get; set; }
         [Required]

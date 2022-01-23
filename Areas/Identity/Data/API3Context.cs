@@ -23,7 +23,7 @@ public class API3Context : IdentityDbContext<API3User>
 
     public DbSet<API3.Models.User> User { get; set; }
 
-    public DbSet<API3.Models.Film> Film { get; set; }
+    public DbSet<API3.Models.Search> Film { get; set; }
 
     public DbSet<API3.Models.ApiFilm> ApiFilm { get; set; }
 }

@@ -11,6 +11,8 @@ using API3.Models;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace API3
 {
@@ -30,27 +32,28 @@ namespace API3
             return View(await aPI3Context.ToListAsync());
 
         }
-
-        public async Task<IActionResult> BtnSearch_Click(string button, string Search)
+        /*[HttpGet("{joker}", Name = "joker")]*/
+        public async Task<IActionResult> check(string button, string Search, string div)
         {
-            string url = "https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s==joker";
-            using (WebClient wc = new WebClient())
+            
+            var Film = new RestClient($"https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=");
+            /*RestRequest request = new RestRequest(Method.Get);
+            IRestResponse response = await client.ExecuteAsync(request);*/
+
+            //TODO: transform the response here to suit your needs
+
+            if (button == "filmBtn")
             {
-                var json = wc.DownloadString(url);
-                string jsonString = JsonSerializer.Serialize(url);
 
-
-            }
-
-            if (button == "titleBtn")
-            {
-                Console.WriteLine("JsonSerializer.Serialize(url)");
-
-                TempData["buttonoval"] = JsonSerializer.Serialize(url);
+                string json = (new WebClient()).DownloadString("https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=joker");
+                var hmar = (new WebClient()).DownloadData("https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=joker");
+                div = "searchResult";
+                
+                 /*TempData["buttonoval"] = JsonConvert.SerializeObject(hmar);*/
             }
             else
             {
-                Console.WriteLine("JsonSerializer.Serialize(urt)");
+               
                 TempData["buttonoval"] = "fuck off";
             }
 

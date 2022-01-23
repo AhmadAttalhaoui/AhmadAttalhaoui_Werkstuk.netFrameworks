@@ -2,7 +2,7 @@
 
 namespace API3.Models
 {
-    public class Film
+    public class Search
     {
         [Key]
         public string imdbID { get; set; }
