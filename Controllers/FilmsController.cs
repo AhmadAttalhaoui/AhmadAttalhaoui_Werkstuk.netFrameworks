@@ -19,22 +19,37 @@ namespace API3
         }
 
         // GET: Films
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string movie)
         {
+            if (movie != null)
+            {
+                string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movie;
+                using (WebClient wc = new WebClient())
+                {
+                    var json = wc.DownloadString(url);
+                    JavaScriptSerializer oJS = new JavaScriptSerializer();
+                    Root obj = oJS.Deserialize<Root>(json);
+                    for (int i = 0; i < obj.Search.Count; i++)
+                    {
+                        ViewBag[i].Movies = obj.Search[i].Title;
+                        
+                    }
+                    Console.WriteLine(obj.ToString());
+                }
+                 
+            }
+            
             return View(await _context.Film.ToListAsync());
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> check(string button, string Search, string div, string movie)
         {
 
-          /*  var Film = new RestClient($"https://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" );*/
-            /*RestRequest request = new RestRequest(Method.Get);
-            IRestResponse response = await client.ExecuteAsync(request);*/
-
             //TODO: transform the response here to suit your needs
 
+            
             string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movie;
             using (WebClient wc = new WebClient())
             {
@@ -44,13 +59,21 @@ namespace API3
 
                 if (obj.Response == "True")
                 {
-                    TempData["buttonoval"] = obj.Search;
-                    
-                }
+                    TempData["buttonoval"] = "kaka";
 
-                return RedirectToAction("Index");
+                }
+                    
+            return RedirectToAction("Index");
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> searchResult()
+        {
+            string[] Countries = { "Russia", "France", "Austria" };
+            ViewBag.Countries = Countries;
+            return RedirectToAction("Index");
+        }*/
 
         // GET: Films/Details/5
         public async Task<IActionResult> Details(string id)

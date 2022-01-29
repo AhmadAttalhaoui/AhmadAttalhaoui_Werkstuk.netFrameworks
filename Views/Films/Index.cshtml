@@ -8,18 +8,37 @@
 <section class="apart">
 
 
-<form method = "post" asp-action="check">
+<form method = "get" asp-action="Index">
 <input  class="form-control me-2" type="search" id ="movie" placeholder="Search" aria-label="Search" name="movie" value = "Search">
 <button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >Search</button>
 </form>
+ 
+
 <div>
-     @TempData["buttonoval"]
+        @*@if (ViewBag.Movies != null)
+        {
+            @foreach (var movie in ViewBag.Movies)
+        {
+         <button>@movie.ToString()</button>       
+        }
+        }*@
+        
+        <button>@ViewBag</button> 
+                
 </div>
 </section>
    
   <section class="bottom">
             <div id="searchResult" runat="server" value ="searchResult" name = "searchResult">
-
+                @if (ViewBag.ListOfMovies != null)
+                {
+                    foreach (var movie in ViewBag.ListOfMovies)
+                    {
+                        <button>@movie</button>
+                    }
+                    
+                    
+                }
             </div>
             
             <div class="alle">
