@@ -17,13 +17,17 @@ body {
   margin-bottom: 60px;
  
 }
+.moviebutton{
+    display: inline-block;
+}
 
-.apart{
+.apart {
     display: flex;
     width: 20%;
 }
-div{
-    display:block;
+.searchResult {
+    display: flex;
+    width: 30%;
 }
 top {
     margin-top: 1.5em;

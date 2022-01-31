@@ -9,40 +9,37 @@
 
 
 <form method = "get" asp-action="Index">
-<input  class="form-control me-2" type="search" id ="movie" placeholder="Search" aria-label="Search" name="movie" value = "Search">
+<input  class="form-control me-2" type="search" id ="movies" placeholder="Search" aria-label="Search" name="movies" value = "Search">
 <button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >Search</button>
 </form>
  
+       
 
-<div>
-        @*@if (ViewBag.Movies != null)
-        {
-            @foreach (var movie in ViewBag.Movies)
-        {
-         <button>@movie.ToString()</button>       
-        }
-        }*@
-        
-        <button>@ViewBag</button> 
-                
-</div>
 </section>
    
   <section class="bottom">
             <div id="searchResult" runat="server" value ="searchResult" name = "searchResult">
-                @if (ViewBag.ListOfMovies != null)
-                {
-                    foreach (var movie in ViewBag.ListOfMovies)
-                    {
-                        <button>@movie</button>
-                    }
-                    
-                    
-                }
-            </div>
+                 @if (ViewBag.Movies != null){
+            @foreach (var movie in ViewBag.Movies)
+            {
+
+                <form method ="get" asp-action ="Index">
+                    <input hidden ="true" value = @movie.Title name ="movie">
+                    <button name ="moviebutton">@movie.Title</button>  
+                </form>
+                
+            }
+        }
+                 
+        </div>
+        
+                <div class="alle">
+        @if (ViewBag.Movie != null)
+                 {
+            @foreach(var movie in ViewBag.Movie)
+            {
             
-            <div class="alle">
-                <img id="image" src="" alt="">
+                    <img src ="@movie.Poster">
                 <div class="movie-body">
                     <h5 id="movie-title">Movie title</h5>
                     <p id="text">Dit is de plot</p>
@@ -51,7 +48,11 @@
                     <button type="button" class="btn btn-primary btn-lg" id="gezien">Gekeken</button>
                     <button type="button" class="btn btn-primary btn-lg" id="delete">Delete</button>
                     </div>
+
+            }
+                 }
             </div>
+            
             <div class="right" id="right">
                 <h3>u heeft zoveel tijd besteden aan films kijken in minuten: </h3>
                 <h2 id="counter">0</h2>

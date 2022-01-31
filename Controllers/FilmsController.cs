@@ -19,25 +19,31 @@ namespace API3
         }
 
         // GET: Films
-        public async Task<IActionResult> Index(string movie)
+        public async Task<IActionResult> Index(string? movies, string? movie)
         {
-            if (movie != null)
+            if (movies != null)
             {
-                string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movie;
+                string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movies;
                 using (WebClient wc = new WebClient())
                 {
                     var json = wc.DownloadString(url);
                     JavaScriptSerializer oJS = new JavaScriptSerializer();
                     Root obj = oJS.Deserialize<Root>(json);
-                    for (int i = 0; i < obj.Search.Count; i++)
-                    {
-                        ViewBag[i].Movies = obj.Search[i].Title;
-                        
-                    }
-                    Console.WriteLine(obj.ToString());
+                    ViewBag.Movies = obj.Search;
                 }
                  
+            }else if (movie != null)
+            {
+                string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&t=" + movie;
+                using (WebClient wc = new WebClient())
+                {
+                    var json = wc.DownloadString(url);
+                    JavaScriptSerializer oJS = new JavaScriptSerializer();
+                    Root obj = oJS.Deserialize<Root>(json);
+                    ViewBag.Movies = obj.Search;
+                }
             }
+
             
             return View(await _context.Film.ToListAsync());
         }
