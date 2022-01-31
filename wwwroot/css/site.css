@@ -52,6 +52,7 @@ top {
     border: 2px solid rgb(224, 4, 4);
     padding: 1.5em;
     padding-left: 1em;
+    box-sizing: content-box;
     border-radius: 30px;
 }
 
