@@ -8,7 +8,7 @@
 <section class="apart">
 
 
-<form method = "get" asp-action="Index">
+<form method = "get" asp-action="Index" name ="eerste">
 <input  class="form-control me-2" type="search" id ="movies" placeholder="Search" aria-label="Search" name="movies" value = "Search">
 <button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >Search</button>
 </form>
@@ -25,7 +25,7 @@
 
                 <form method ="get" asp-action ="Index">
                     <input hidden ="true" value = @movie.Title name ="movie">
-                    <button name ="moviebutton">@movie.Title</button>  
+                    <button name ="movie">@movie.Title</button>  
                 </form>
                 
             }
@@ -36,20 +36,20 @@
                 <div class="alle">
         @if (ViewBag.Movie != null)
                  {
-            @foreach(var movie in ViewBag.Movie)
-            {
-            
-                    <img src ="@movie.Poster">
+                     
+                    <img src = "@ViewBag.Movie.Poster">
+                    
                 <div class="movie-body">
-                    <h5 id="movie-title">Movie title</h5>
-                    <p id="text">Dit is de plot</p>
-                    <p id="date">hier kunt u zien wanneer de film is uitgekomen</p>
-                    <p id="tijd">hier kunt u zien hoe lang de film duurt in minuten</p>
+                    
+                    <h5 id="movie-title">@ViewBag.Movie.Title</h5>
+                    <p id="text">@ViewBag.Movie.Plot</p>
+                    <p id="date">@ViewBag.Movie.Year</p>
+                    <p id="tijd">@ViewBag.Movie.Runtime</p>
                     <button type="button" class="btn btn-primary btn-lg" id="gezien">Gekeken</button>
                     <button type="button" class="btn btn-primary btn-lg" id="delete">Delete</button>
                     </div>
 
-            }
+            
                  }
             </div>
             

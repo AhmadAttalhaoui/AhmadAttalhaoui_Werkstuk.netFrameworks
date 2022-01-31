@@ -29,7 +29,8 @@ namespace API3
                     var json = wc.DownloadString(url);
                     JavaScriptSerializer oJS = new JavaScriptSerializer();
                     Root obj = oJS.Deserialize<Root>(json);
-                    ViewBag.Movies = obj.Search;
+                    ViewBag.Movies = obj.Search;     
+                    
                 }
                  
             }else if (movie != null)
@@ -39,8 +40,10 @@ namespace API3
                 {
                     var json = wc.DownloadString(url);
                     JavaScriptSerializer oJS = new JavaScriptSerializer();
-                    Root obj = oJS.Deserialize<Root>(json);
-                    ViewBag.Movies = obj.Search;
+                    Search film = oJS.Deserialize<Search>(json);
+                    ViewBag.Movie = film;
+
+                    Console.WriteLine(film);
                 }
             }
 
