@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace API3.Models
 {
-    public class User
+    public class User : IdentityUser
     {
 
         [Key]

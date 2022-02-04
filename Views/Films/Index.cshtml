@@ -62,24 +62,13 @@
                     
                     </div>
                     </form>
-
-            <button type="button" class="btn btn-primary btn-lg" id="delete">Delete</button>
+                    
                  }
             </div>
-            
-            <div class="right" id="right">
-                <h3>u heeft zoveel tijd besteden aan films kijken in minuten: </h3>
-                <h2 id="counter">0</h2>
-
-                <div id="moviewatched">
-
-                </div>
-            </div>
+           
 
         </section>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -92,9 +81,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Poster)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Plot)
             </th>
@@ -116,17 +103,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Poster)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Plot)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Runtime)
             </td>
+            
             <td>
-                <a asp-action="Edit" asp-route-id="@item.imdbID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.imdbID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.imdbID">Delete</a>
             </td>

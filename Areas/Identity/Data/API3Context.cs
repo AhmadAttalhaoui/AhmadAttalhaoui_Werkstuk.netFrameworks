@@ -6,7 +6,7 @@ using API3.Models;
 
 namespace API3.Data;
 
-public class API3Context : IdentityDbContext
+public class API3Context : IdentityDbContext<API3User>
 {
     public API3Context(DbContextOptions<API3Context> options)
         : base(options)

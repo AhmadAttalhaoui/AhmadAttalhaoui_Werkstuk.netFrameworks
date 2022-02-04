@@ -45,22 +45,11 @@ namespace API3
                     Search film = oJS.Deserialize<Search>(json);
                     ViewBag.Movie = film;
                     search = film;
-                   /* if (watch != null)
-                    {
-                        _context.Add(search);
-                        await _context.SaveChangesAsync();
-                        search = film;
-                    }*/
+                   
                     
 
                 }
-            }/*else if(watch != null)
-            {
-               *//* ViewBag.Movie = search;*//*
-                _context.Add(search);
-                await _context.SaveChangesAsync();  
-                
-            }*/
+            }
             
 
 
@@ -121,57 +110,7 @@ namespace API3
             }
             return View(film);
         }
-
-        // GET: Films/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var film = await _context.Film.FindAsync(id);
-            if (film == null)
-            {
-                return NotFound();
-            }
-            return View(film);
-        }
-
-        // POST: Films/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search film)
-        {
-            if (id != film.imdbID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(film);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FilmExists(film.imdbID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(film);
-        }
+        
 
         // GET: Films/Delete/5
         public async Task<IActionResult> Delete(string id)
