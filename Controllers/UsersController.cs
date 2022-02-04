@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API3.Data;
 using API3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API3
 {
+    [Authorize (Roles ="Admin")]
     public class UsersController : Controller
     {
         private readonly API3Context _context;

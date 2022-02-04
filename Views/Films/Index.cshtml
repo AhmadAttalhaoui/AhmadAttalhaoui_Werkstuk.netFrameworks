@@ -9,7 +9,7 @@
 
 
 <form method = "get" asp-action="Index" name ="eerste">
-<input  class="form-control me-2" type="search" id ="movies" placeholder="Search" aria-label="Search" name="movies" value = "Search">
+<input  class="form-control me-2" type="search" id ="movies" placeholder="Search" aria-label="Search" name="movies" >
 <button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >Search</button>
 </form>
  
@@ -38,18 +38,32 @@
                  {
                      
                     <img src = "@ViewBag.Movie.Poster">
-                    
+                    <form method = "post" asp-action ="Add">
                 <div class="movie-body">
-                    
-                    <h5 id="movie-title">@ViewBag.Movie.Title</h5>
-                    <p id="text">@ViewBag.Movie.Plot</p>
-                    <p id="date">@ViewBag.Movie.Year</p>
-                    <p id="tijd">@ViewBag.Movie.Runtime</p>
-                    <button type="button" class="btn btn-primary btn-lg" id="gezien">Gekeken</button>
-                    <button type="button" class="btn btn-primary btn-lg" id="delete">Delete</button>
-                    </div>
+                    <h5 id="movie-title" name = "Title">@ViewBag.Movie.Title</h5>
+                    <p id="text"name = "Plot">@ViewBag.Movie.Plot</p>
+                    <p id="date" name = "Year">@ViewBag.Movie.Year</p>
+                    <p id="tijd" name = "Runtime">@ViewBag.Movie.Runtime</p>
 
-            
+                    <input hidden="true" name ="Poster"value= "@ViewBag.Movie.Poster">
+                    <input id="tijd" hidden = "true" name = "imdbID" value = @ViewBag.Movie.imdbID>
+                    <input id="movie-title" hidden = "true" name = "Title"value = @ViewBag.Movie.Title>
+                    <input id="text" hidden = "true" name = "Plot" value = @ViewBag.Movie.Plot>
+                    <input id="date" hidden = "true" name = "Year"value = @ViewBag.Movie.Year>
+                    <input id="tijd" hidden = "true" name = "Runtime" value = @ViewBag.Movie.Runtime>
+                    <input hidden = "true" name="Type" value = @ViewBag.Movie.Type>
+         
+                    
+                    <input hidden ="true" value = @ViewBag.Movie name = "watch">
+                    <button type="submit" class="btn btn-primary btn-lg" id="gezien" name = "watch">Gekeken</button>
+                                                           
+                    
+                    
+                    
+                    </div>
+                    </form>
+
+            <button type="button" class="btn btn-primary btn-lg" id="delete">Delete</button>
                  }
             </div>
             

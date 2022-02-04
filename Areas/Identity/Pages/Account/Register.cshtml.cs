@@ -80,6 +80,12 @@ namespace API3.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Display(Name = "Voornaam")]
+            public string Voornaam { get; set; }
+
+            [Display(Name = "Achetrnaam")]
+            public string Achetrnaam { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -114,6 +120,8 @@ namespace API3.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.Voornaam = Input.Voornaam;
+                user.Achternaam = Input.Achetrnaam;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

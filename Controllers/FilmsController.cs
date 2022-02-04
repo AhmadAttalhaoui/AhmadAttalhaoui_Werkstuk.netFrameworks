@@ -6,9 +6,11 @@ using API3.Models;
 using RestSharp;
 using System.Net;
 using Nancy.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API3
 {
+    [Authorize]
     public class FilmsController : Controller
     {
         private readonly API3Context _context;
@@ -19,7 +21,7 @@ namespace API3
         }
 
         // GET: Films
-        public async Task<IActionResult> Index(string? movies, string? movie)
+        public async Task<IActionResult> Index(string? movies, string? movie, [Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search search, string? watch)
         {
             if (movies != null)
             {
@@ -42,48 +44,44 @@ namespace API3
                     JavaScriptSerializer oJS = new JavaScriptSerializer();
                     Search film = oJS.Deserialize<Search>(json);
                     ViewBag.Movie = film;
+                    search = film;
+                   /* if (watch != null)
+                    {
+                        _context.Add(search);
+                        await _context.SaveChangesAsync();
+                        search = film;
+                    }*/
+                    
 
-                    Console.WriteLine(film);
                 }
-            }
-
+            }/*else if(watch != null)
+            {
+               *//* ViewBag.Movie = search;*//*
+                _context.Add(search);
+                await _context.SaveChangesAsync();  
+                
+            }*/
             
+
+
             return View(await _context.Film.ToListAsync());
         }
 
-       /* [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> check(string button, string Search, string div, string movie)
-        {
-
-            //TODO: transform the response here to suit your needs
-
-            
-            string url = "http://www.omdbapi.com/?i=tt3896198&apikey=738dd7e3&s=" + movie;
-            using (WebClient wc = new WebClient())
-            {
-                var json = wc.DownloadString(url);
-                JavaScriptSerializer oJS = new JavaScriptSerializer();
-                Root obj = oJS.Deserialize<Root>(json);
-
-                if (obj.Response == "True")
-                {
-                    TempData["buttonoval"] = "kaka";
-
-                }
-                    
-            return RedirectToAction("Index");
-            }
-        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> searchResult()
+        public async Task<IActionResult> Add([Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search film)
         {
-            string[] Countries = { "Russia", "France", "Austria" };
-            ViewBag.Countries = Countries;
-            return RedirectToAction("Index");
-        }*/
 
+            if (ModelState.IsValid)
+            {
+                
+                Console.WriteLine(film);
+                _context.Add(film);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+           return RedirectToAction(nameof(Index));
+        }
         // GET: Films/Details/5
         public async Task<IActionResult> Details(string id)
         {

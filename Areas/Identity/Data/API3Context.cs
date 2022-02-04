@@ -6,7 +6,7 @@ using API3.Models;
 
 namespace API3.Data;
 
-public class API3Context : IdentityDbContext<API3User>
+public class API3Context : IdentityDbContext
 {
     public API3Context(DbContextOptions<API3Context> options)
         : base(options)
@@ -15,6 +15,7 @@ public class API3Context : IdentityDbContext<API3User>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
         base.OnModelCreating(builder);
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
