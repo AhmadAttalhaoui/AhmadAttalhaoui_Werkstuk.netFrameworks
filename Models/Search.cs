@@ -12,5 +12,7 @@ namespace API3.Models
         public string Poster { get; set; }
         public string Plot { get; set; }
         public string Runtime { get; set; }
+
+        public ICollection<Critique>? Critiques { get; set; }
     }
 }

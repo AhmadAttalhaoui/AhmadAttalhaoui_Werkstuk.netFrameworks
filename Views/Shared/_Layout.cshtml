@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿ @inject LanguagService language
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,13 +21,39 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@language.Getkey("home")</a>
                         </li>
                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@language.Getkey("privacy")</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Critiques" asp-action="Index">@language.Getkey("criticism")</a>
                         </li>
                     </ul>
+                    <div class="nav-wrapper">
+                    <div class="sl-nav">
+                        <ul>
+                            <li>
+                               
+                                <div class="triangle"></div>
+                                <ul class="language">
+
+                                    <li><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="en-US" class="nav-link"><i class="flag-icon flag-icon-gb"></i> English</a></li>
+
+                                    <li><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="fr-FR" class="nav-link"><i class="flag-icon flag-icon-de"></i> Français</a></li>
+
+                                    <li><a asp-controller="Home" asp-action="ChangeLanguage" asp-route-culture="nl-NL" class="nav-link"><i class="flag-icon flag-icon-nl"></i> Nederlands</a></li>
+
+                                </ul>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
                     <partial name="_LoginPartial" />
                 </div>
             </div>

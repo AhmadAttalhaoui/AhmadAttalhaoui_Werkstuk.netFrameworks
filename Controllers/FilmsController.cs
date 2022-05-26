@@ -7,6 +7,7 @@ using RestSharp;
 using System.Net;
 using Nancy.Json;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 
 namespace API3
 {
@@ -46,8 +47,6 @@ namespace API3
                     ViewBag.Movie = film;
                     search = film;
                    
-                    
-
                 }
             }
             
@@ -55,7 +54,14 @@ namespace API3
 
             return View(await _context.Film.ToListAsync());
         }
+        public IActionResult ChangeLanguage(string culture)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions() { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add([Bind("imdbID,Title,Year,Type,Poster,Plot,Runtime")] Search film)
@@ -79,8 +85,11 @@ namespace API3
                 return NotFound();
             }
 
-            var film = await _context.Film
+            var film = await _context.Film.Include(c => c.Critiques)
                 .FirstOrDefaultAsync(m => m.imdbID == id);
+
+
+            
             if (film == null)
             {
                 return NotFound();
@@ -89,8 +98,56 @@ namespace API3
             return View(film);
         }
 
+        public IActionResult CreateCritique()
+        {
+
+            return View();
+        }
+
+        // POST: Critiques/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCritique(string id, [Bind("imdbID,Content")] Critique critique)
+        {
+
+            var film = await _context.Film.Include(c => c.Critiques)
+                .FirstOrDefaultAsync(m => m.imdbID == critique.imdbID);
+
+
+
+            // if(film.imdbID == Critique.imdbID) { 
+            
+
+                _context.Add(critique);
+                await _context.SaveChangesAsync();
+                return Redirect($"https://localhost:7142/Films/Details/{film.imdbID}");
+            
+        }
+
+        // GET: Critiques/Edit/5
+        /*public async Task<IActionResult> CritiqueEdit(int id, string imdbID)
+        {
+            if (id == null || _context.Critique == null)
+            {
+                return NotFound();
+            }
+
+            var critique = await _context.Critique.FindAsync(id);
+
+            var film = await _context.Film.Include(c => c.Critiques)
+                .FirstOrDefaultAsync(m => m.imdbID == critique.imdbID);
+
+            if (critique == null)
+            {
+                return NotFound();
+            }
+            return Redirect($"https://localhost:7142/Films/Details/{film.imdbID}");
+        }*/
+
         // GET: Films/Create
-        public IActionResult Create()
+        /*public IActionResult Create()
         {
             return View();
         }
@@ -109,8 +166,8 @@ namespace API3
                 return RedirectToAction(nameof(Index));
             }
             return View(film);
-        }
-        
+        }*/
+
 
         // GET: Films/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -141,6 +198,45 @@ namespace API3
             return RedirectToAction(nameof(Index));
         }
 
+        
+
+        // GET: Films/Delete/5
+      /*  public async Task<IActionResult> CritiqueDelete(string id)
+        {
+            if (id == null || _context.Critique == null)
+            {
+                return NotFound();
+            }
+
+            var critique = await _context.Critique
+                .FirstOrDefaultAsync(m => m.imdbID == id);
+            if (critique == null)
+            {
+                return NotFound();
+            }
+
+            return View(critique);
+        }
+
+        // POST: Critiques/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CritiqueDeleteConfirmed(string id)
+        {
+            if (_context.Critique == null)
+            {
+                return Problem("Entity set 'API3Context.Critique'  is null.");
+            }
+            var critique = await _context.Critique.FindAsync(id);
+            if (critique != null)
+            {
+                _context.Critique.Remove(critique);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+*/
         private bool FilmExists(string id)
         {
             return _context.Film.Any(e => e.imdbID == id);

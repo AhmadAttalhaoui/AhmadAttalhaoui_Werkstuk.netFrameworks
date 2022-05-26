@@ -1,7 +1,12 @@
 using API3.Areas.Identity.Data;
 using API3.Data;
+using API3.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +21,53 @@ builder.Services.AddDefaultIdentity<API3User>(options => options.SignIn.RequireC
     .AddEntityFrameworkStores<API3Context>();
 builder.Services.AddControllersWithViews();
 
+    builder.Services.AddSingleton<LanguagService>();
+
+    builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+    builder.Services.AddMvc()
+        .AddViewLocalization()
+        .AddDataAnnotationsLocalization(options =>
+        {
+            options.DataAnnotationLocalizerProvider = (type, factory) =>
+            {
+
+                var assemblyName = new AssemblyName(typeof(ShareResource).GetTypeInfo().Assembly.FullName);
+
+                return factory.Create("ShareResource", assemblyName.Name);
+
+            };
+
+        });
+
+
+
+    builder.Services.Configure<RequestLocalizationOptions>(
+        options =>
+        {
+            var supportedCultures = new List<CultureInfo>
+                {
+                            new CultureInfo("en-US"),
+                            new CultureInfo("nl-NL"),
+                            new CultureInfo("fr-FR"),
+                };
+
+
+
+            options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
+
+        });
+
 var app = builder.Build();
+
+var locOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+
+app.UseRequestLocalization(locOptions.Value);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

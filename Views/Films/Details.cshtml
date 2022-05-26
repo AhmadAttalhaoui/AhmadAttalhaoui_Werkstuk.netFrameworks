@@ -1,4 +1,5 @@
 ﻿@model API3.Models.Search
+@inject LanguagService language
 
 @{
     ViewData["Title"] = "Details";
@@ -49,6 +50,36 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.imdbID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@language.Getkey("search")</a>
 </div>
+
+<h1>Critique</h1>
+
+<p>
+    <a asp-action="CreateCritique">@language.Getkey("create new")</a>
+</p>
+<table>
+    <thead class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Critiques)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+ <tbody>
+@foreach (var item in Model.Critiques) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+
+           @* <td>
+                <a asp-action="CritiqueEdit" asp-route-id="@item.imdbID">@language.Getkey("edit")</a> |
+                <a asp-action="CritiqueDelete" asp-route-id="@item.imdbID">@language.Getkey("delete")</a>
+            </td>*@
+        </tr>
+}   
+    <h2><bold>@language.Getkey("CritiqueCopy")</bold></h2>
+    </tbody>
+    </table>

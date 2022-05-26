@@ -3,14 +3,15 @@
 @{
     ViewData["Title"] = "Index";
 }
+@inject LanguagService language
 
-<h1>Index</h1>
+<h1 class="display-4">@language.Getkey("movie")</h1>
 <section class="apart">
 
 
 <form method = "get" asp-action="Index" name ="eerste">
-<input  class="form-control me-2" type="search" id ="movies" placeholder="Search" aria-label="Search" name="movies" >
-<button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >Search</button>
+<input  class="form-control me-2" type="search" id ="movies" placeholder=@language.Getkey("search") aria-label="Search" name="movies" >
+<button name="button"  value="filmBtn"  id ="search"  class="btn btn-outline-success"  type="submit" >@language.Getkey("search")</button>
 </form>
  
        
@@ -55,7 +56,7 @@
          
                     
                     <input hidden ="true" value = @ViewBag.Movie name = "watch">
-                    <button type="submit" class="btn btn-primary btn-lg" id="gezien" name = "watch">Gekeken</button>
+                    <button type="submit" class="btn btn-primary btn-lg" id="gezien" name = "watch">@language.Getkey("watched")</button>
                                                            
                     
                     
@@ -112,8 +113,9 @@
             </td>
             
             <td>
-                <a asp-action="Details" asp-route-id="@item.imdbID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.imdbID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.imdbID">@language.Getkey("details")</a> |
+                <a asp-action="Delete" asp-route-id="@item.imdbID">@language.Getkey("delete")</a> |
+                <a asp-area="" asp-controller="Critiques" asp-action="Index">@language.Getkey("criticism")</a>
             </td>
         </tr>
 }
