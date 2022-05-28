@@ -98,9 +98,9 @@ namespace API3
             return View(film);
         }
 
-        public IActionResult CreateCritique()
+        public IActionResult CreateCritique(string id)
         {
-
+            ViewBag.imdbID = id;
             return View();
         }
 
@@ -118,12 +118,16 @@ namespace API3
 
 
             // if(film.imdbID == Critique.imdbID) { 
-            
-
+            critique.imdbID = id;
+            if (ModelState.IsValid) {
                 _context.Add(critique);
                 await _context.SaveChangesAsync();
                 return Redirect($"https://localhost:7142/Films/Details/{film.imdbID}");
-            
+            }
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+            return RedirectToAction("error");
         }
 
         // GET: Critiques/Edit/5
@@ -198,10 +202,10 @@ namespace API3
             return RedirectToAction(nameof(Index));
         }
 
-        
+
 
         // GET: Films/Delete/5
-      /*  public async Task<IActionResult> CritiqueDelete(string id)
+        public async Task<IActionResult> CritiqueDelete(string id)
         {
             if (id == null || _context.Critique == null)
             {
@@ -236,7 +240,7 @@ namespace API3
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-*/
+
         private bool FilmExists(string id)
         {
             return _context.Film.Any(e => e.imdbID == id);

@@ -8,6 +8,6 @@ namespace API3.Models
         public int Id { get; set; }
         public String imdbID { get; set; }
         public String Content { get; set; }
-        public Search search { get; set; }
+        public Search? search { get; set; }
     }
 }

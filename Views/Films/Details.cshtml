@@ -56,7 +56,7 @@
 <h1>Critique</h1>
 
 <p>
-    <a asp-action="CreateCritique">@language.Getkey("create new")</a>
+    <a asp-action="CreateCritique" asp-route-id="@Model.imdbID">@language.Getkey("create new")</a>
 </p>
 <table>
     <thead class="table">
@@ -76,10 +76,12 @@
 
            @* <td>
                 <a asp-action="CritiqueEdit" asp-route-id="@item.imdbID">@language.Getkey("edit")</a> |
-                <a asp-action="CritiqueDelete" asp-route-id="@item.imdbID">@language.Getkey("delete")</a>
             </td>*@
+            <td>
+                <a asp-action="CritiqueDelete" asp-route-id="model.imdbID">@language.Getkey("delete")</a>
+                </td>
         </tr>
 }   
-    <h2><bold>@language.Getkey("CritiqueCopy")</bold></h2>
+    
     </tbody>
     </table>
