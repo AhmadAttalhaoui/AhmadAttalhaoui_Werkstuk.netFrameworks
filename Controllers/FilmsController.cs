@@ -158,12 +158,15 @@ namespace API3
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("CritiqueEdit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CritiqueEdit(int id, Critique critique)
+        public async Task<IActionResult> CritiqueEdit(int id, string Content)
         {
-            if (id != critique.Id)
+           var critique = await _context.Critique
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if(critique == null)
             {
                 return NotFound();
             }
+            critique.Content = Content;
 
             if (ModelState.IsValid)
             {
@@ -183,7 +186,7 @@ namespace API3
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details));
             }
             return View(critique);
         }
