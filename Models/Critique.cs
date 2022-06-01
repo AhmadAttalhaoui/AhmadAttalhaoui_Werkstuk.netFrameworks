@@ -6,7 +6,7 @@ namespace API3.Models
     {
         [Key]
         public int Id { get; set; }
-        public String imdbID { get; set; }
+        public String? imdbID { get; set; }
         public String Content { get; set; }
         public Search? search { get; set; }
     }

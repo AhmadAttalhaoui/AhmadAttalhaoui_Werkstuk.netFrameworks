@@ -131,24 +131,67 @@ namespace API3
         }
 
         // GET: Critiques/Edit/5
-        /*public async Task<IActionResult> CritiqueEdit(int id, string imdbID)
+        public async Task<IActionResult> CritiqueEdit(int id)
         {
             if (id == null || _context.Critique == null)
             {
                 return NotFound();
             }
 
-            var critique = await _context.Critique.FindAsync(id);
+            var critique = await _context.Critique
+                .FirstOrDefaultAsync(i => i.Id == id);
+            /*var critique = await _context.Critique.FindAsync(id);*/
 
-            var film = await _context.Film.Include(c => c.Critiques)
-                .FirstOrDefaultAsync(m => m.imdbID == critique.imdbID);
+            /*var film = await _context.Film.Include(c => c.Critiques)
+                .FirstOrDefaultAsync(m => m.imdbID == critique.imdbID);*/
 
             if (critique == null)
             {
                 return NotFound();
             }
-            return Redirect($"https://localhost:7142/Films/Details/{film.imdbID}");
-        }*/
+            return View(critique);
+            /* return Redirect($"https://localhost:7142/Films/Details/{film.imdbID}");*/
+        }
+
+        // POST: Critiques/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost, ActionName("CritiqueEdit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CritiqueEdit(int id, Critique critique)
+        {
+            if (id != critique.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(critique);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CritiqueExists(critique.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(critique);
+        }
+
+        private bool CritiqueExists(int Id)
+        {
+            throw new NotImplementedException();
+        }
 
         // GET: Films/Create
         /*public IActionResult Create()
@@ -205,7 +248,7 @@ namespace API3
 
 
         // GET: Films/Delete/5
-        public async Task<IActionResult> CritiqueDelete(string id)
+        public async Task<IActionResult> CritiqueDelete(int id)
         {
             if (id == null || _context.Critique == null)
             {
@@ -213,7 +256,7 @@ namespace API3
             }
 
             var critique = await _context.Critique
-                .FirstOrDefaultAsync(m => m.imdbID == id);
+                .FirstOrDefaultAsync(i => i.Id == id);
             if (critique == null)
             {
                 return NotFound();
@@ -223,9 +266,9 @@ namespace API3
         }
 
         // POST: Critiques/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("CritiqueDelete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CritiqueDeleteConfirmed(string id)
+        public async Task<IActionResult> CritiqueDeleteConfirmed(int id)
         {
             if (_context.Critique == null)
             {

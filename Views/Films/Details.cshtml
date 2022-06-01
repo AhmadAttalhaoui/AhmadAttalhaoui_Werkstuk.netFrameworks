@@ -74,11 +74,11 @@
                 @Html.DisplayFor(modelItem => item.Content)
             </td>
 
-           @* <td>
-                <a asp-action="CritiqueEdit" asp-route-id="@item.imdbID">@language.Getkey("edit")</a> |
-            </td>*@
             <td>
-                <a asp-action="CritiqueDelete" asp-route-id="model.imdbID">@language.Getkey("delete")</a>
+                <a asp-action="CritiqueEdit" asp-route-id="@item.Id">@language.Getkey("edit")</a> |
+            </td>
+            <td>
+                <a asp-action="CritiqueDelete" asp-route-id="@item.Id" >@language.Getkey("delete")</a>
                 </td>
         </tr>
 }   
