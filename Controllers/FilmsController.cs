@@ -186,7 +186,7 @@ namespace API3
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Details));
+                return RedirectToAction(nameof(Index));
             }
             return View(critique);
         }
