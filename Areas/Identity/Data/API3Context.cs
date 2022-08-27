@@ -25,14 +25,27 @@ public class API3Context : IdentityDbContext<API3User>
                     .HasOne(f=> f.search)
                     .WithMany(c=> c.Critiques)
                     .HasForeignKey(f => f.imdbID);
+
+        builder.Entity<User>().HasData(
+
+            new User {  
+                Id = 1,
+                UserName = "Maria",  
+                Email = "Maria@gmail.com", 
+                EmailConfirmed = true, 
+                Achternaam = "Jaqueline", 
+                Voornaam = "Maria" }
+        );
     }
 
     public DbSet<API3.Models.User> User { get; set; }
+
 
     public DbSet<API3.Models.Search> Film { get; set; }
 
     public DbSet<API3.Models.ApiFilm> ApiFilm { get; set; }
 
     public DbSet<API3.Models.Critique> Critique { get; set; }
+    
 
 }

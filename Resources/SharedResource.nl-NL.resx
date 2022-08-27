@@ -120,17 +120,23 @@
   <data name="back to list" xml:space="preserve">
     <value>Terug naar lijst</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Inhoud</value>
+  </data>
   <data name="create new" xml:space="preserve">
     <value>Maak Nieuw</value>
   </data>
   <data name="criticism" xml:space="preserve">
-    <value>Kritiek</value>
+    <value>notitie</value>
   </data>
   <data name="CritiqueCopy" xml:space="preserve">
     <value>Voor dat je een critique maakt, in de navbar zie je een Details/ daarna is er een sleutel copier het en plak het in de volgende pagina bij imdbID</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>Verwijderen</value>
+  </data>
+  <data name="delete remark" xml:space="preserve">
+    <value>Opmerking Verwijderen</value>
   </data>
   <data name="details" xml:space="preserve">
     <value>Details</value>
@@ -147,8 +153,14 @@
   <data name="privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="remark edit" xml:space="preserve">
+    <value>Opmerking Bewerken</value>
+  </data>
   <data name="search" xml:space="preserve">
     <value>Zoek</value>
+  </data>
+  <data name="sure" xml:space="preserve">
+    <value>Weet je zeker dat je dit wilt verwijderen?</value>
   </data>
   <data name="watched" xml:space="preserve">
     <value>Gekeken</value>

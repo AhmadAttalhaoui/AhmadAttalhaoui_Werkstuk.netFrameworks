@@ -48,12 +48,11 @@
             @Html.DisplayFor(model => model.Runtime)
         </dd>
     </dl>
-</div>
 <div>
     <a asp-action="Index">@language.Getkey("search")</a>
 </div>
 
-<h1>Critique</h1>
+<h1>@language.Getkey("criticism")</h1>
 
 <p>
     <a asp-action="CreateCritique" asp-route-id="@Model.imdbID">@language.Getkey("create new")</a>
@@ -64,7 +63,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Critiques)
             </th>
-            <th></th>
         </tr>
     </thead>
  <tbody>
@@ -85,3 +83,4 @@
     
     </tbody>
     </table>
+</div>

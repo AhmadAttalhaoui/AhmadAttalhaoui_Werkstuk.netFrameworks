@@ -243,6 +243,26 @@ namespace API3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            Achternaam = "Jaqueline",
+                            ConcurrencyStamp = "fc4a7524-df94-4fb8-8995-b698690c3008",
+                            Email = "Maria@gmail.com",
+                            EmailConfirmed = true,
+                            Geboortedatum = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LockoutEnabled = false,
+                            NormalizedEmail = "Maria@gmail.com",
+                            NormalizedUserName = "Maria",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3fbdfcb0-f490-4682-a565-90ee21db7c70",
+                            TwoFactorEnabled = false,
+                            UserName = "Maria",
+                            Voornaam = "Maria"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

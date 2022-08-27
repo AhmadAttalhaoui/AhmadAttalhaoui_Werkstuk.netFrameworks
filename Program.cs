@@ -18,10 +18,13 @@ builder.Services.AddDbContext<API3Context>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<API3User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<API3Context>();
+
 builder.Services.AddControllersWithViews();
 
     builder.Services.AddSingleton<LanguagService>();
+    builder.Services.AddCoreAdmin("Admin");
 
     builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -38,7 +41,10 @@ builder.Services.AddControllersWithViews();
 
             };
 
+
         });
+
+
 
 
 
@@ -64,6 +70,9 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+  /*          using var userManager = app.ServiceProvider.GetProvider.GetRequiredService<UserManager<>>()){
+
+};*/
 var locOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 
 app.UseRequestLocalization(locOptions.Value);

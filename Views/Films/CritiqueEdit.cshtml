@@ -1,12 +1,14 @@
 ﻿@model API3.Models.Critique
+@inject LanguagService language
+
 
 @{
-    ViewData["Title"] = "CritiqueEdit";
+    ViewData["Title"] = @language.Getkey("remark edit");
 }
 
-<h1>Edit</h1>
+<h1>@language.Getkey("edit")</h1>
 
-<h4>Critique</h4>
+<h4>@language.Getkey("criticism")</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,7 +33,7 @@
 </div>
 
 <div>
-    <a asp-action="Details">Back to List</a>
+    <a asp-action="Index">@language.Getkey("back to list")</a>
 </div>
 
 @section Scripts {

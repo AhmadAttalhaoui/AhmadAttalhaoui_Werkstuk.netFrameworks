@@ -120,17 +120,23 @@
   <data name="back to list" xml:space="preserve">
     <value>Retour à la liste</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Contenu</value>
+  </data>
   <data name="create new" xml:space="preserve">
     <value>Créer Nouveau</value>
   </data>
   <data name="criticism" xml:space="preserve">
-    <value>Critique</value>
+    <value>Remarque</value>
   </data>
   <data name="CritiqueCopy" xml:space="preserve">
     <value>Avant de faire une critique, dans la barre de navigation, vous verrez un Détails / après cela, il y a une clé, copiez-le et collez-le dans la page suivante à imdbID</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>Supprime</value>
+  </data>
+  <data name="delete remark" xml:space="preserve">
+    <value>Supprimer La Remarque</value>
   </data>
   <data name="details" xml:space="preserve">
     <value>Details</value>
@@ -147,8 +153,14 @@
   <data name="privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="remark edit" xml:space="preserve">
+    <value>Modifier La Remarque</value>
+  </data>
   <data name="search" xml:space="preserve">
     <value>Recherche</value>
+  </data>
+  <data name="sure" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir supprimer ceci ?</value>
   </data>
   <data name="watched" xml:space="preserve">
     <value>Vue</value>

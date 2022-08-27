@@ -120,17 +120,23 @@
   <data name="back to list" xml:space="preserve">
     <value>Back to list</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Content</value>
+  </data>
   <data name="create new" xml:space="preserve">
     <value>Create New</value>
   </data>
   <data name="criticism" xml:space="preserve">
-    <value>Critisim</value>
+    <value>Remark</value>
   </data>
   <data name="CritiqueCopy" xml:space="preserve">
     <value>Before making a critique, in the navbar you will see a Details/ after that there is a key copy it and paste it in the next page at imdbID</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="delete remark" xml:space="preserve">
+    <value>Delete Remark</value>
   </data>
   <data name="details" xml:space="preserve">
     <value>Details</value>
@@ -147,8 +153,14 @@
   <data name="privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="remark edit" xml:space="preserve">
+    <value>Remark Edit</value>
+  </data>
   <data name="search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="sure" xml:space="preserve">
+    <value>Are you sure you want to delete this?</value>
   </data>
   <data name="watched" xml:space="preserve">
     <value>Watched</value>
